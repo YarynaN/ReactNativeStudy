@@ -20,7 +20,8 @@ export default class App extends Component {
         places: prevState.places.concat(
         {key: Math.random(), 
         name: placeName, 
-        image:{uri: "https://www.telegraph.co.uk/content/dam/property/Spark/JLL/Berlin-centre.jpg?imwidth=450"}  })
+        image:{uri: "https://www.telegraph.co.uk/content/dam/property/Spark/JLL/Berlin-centre.jpg?imwidth=450"}
+        })
       };
     });
 }
