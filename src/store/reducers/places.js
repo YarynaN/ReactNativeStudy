@@ -3,7 +3,7 @@ import {
   DELETE_PLACE,
   SELECT_PLACE,
   DESELECT_PLACE
-} from "../actions.actionTypes";
+} from "../actions/actionTypes";
 
 const initialState = {
   places: [],
