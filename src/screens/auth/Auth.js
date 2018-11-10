@@ -5,7 +5,7 @@ class AuthScreen extends Component{
 	render () {
 		return(
 			<View>
-				<Text>Yarya is Awesome</Text>
+				<Text>Yaryna is Awesome</Text>
 			</View>
 		);
 	}
