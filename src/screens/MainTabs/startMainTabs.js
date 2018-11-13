@@ -1,9 +1,12 @@
 import { Navigation } from "react-native-navigation";
-//import placeImage from ".../src/assets/berlin_1.jpg";
-
+import Icon from "react-native-vector-icons/Ionicons";
 
 const startTabs = () => {
-	Navigation.setRoot({
+	Promise.all([
+		Icon.getImageSource("md-map", 30),
+		Icon.getImageSource("share-alt", 30)
+	]).then(sources => {
+		Navigation.setRoot({
 		root: {
 			bottomTabs: {
 			  children: [{
@@ -19,7 +22,7 @@ const startTabs = () => {
 			      options: {
 			        bottomTab: {
 			          title: 'Find Place',
-			          //icon: require("../assets/berlin_1.jpg"),
+			          icon: sources[0],
 			          testID: 'FIRST_TAB_BAR_BUTTON'
 			        }
 			      }
@@ -34,7 +37,7 @@ const startTabs = () => {
 			      options: {
 			        bottomTab: {
 			          title: 'Share Place',
-			          //icon: require("../assets/berlin_1.jpg"),
+			          icon: sources[1],
 			          testID: 'SECOND_TAB_BAR_BUTTON'
 			        }
 			      }
@@ -43,6 +46,8 @@ const startTabs = () => {
 			}
 		}
 	});
+	});
+	
 }
 
 export default startTabs;

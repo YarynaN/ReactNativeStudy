@@ -29,47 +29,4 @@ Navigation.events().registerAppLaunchedListener(() => {
       }
     }
   });
-
-/*
-  Navigation.setRoot({
-    root: {
-      bottomTabs: {
-        children: [{
-          stack: {
-            children: [{
-              component: {
-                name: 'awesome-places.AuthScreen',
-                passProps: {
-                  text: 'This is tab 1'
-                }
-              }
-            }],
-            options: {
-              bottomTab: {
-                title: 'Tab 1',
-                //icon: require('../images/one.png'),
-                testID: 'FIRST_TAB_BAR_BUTTON'
-              }
-            }
-          }
-        },
-        {
-          component: {
-            name: 'awesome-places.AuthScreen',
-            passProps: {
-              text: 'This is tab 2'
-            },
-            options: {
-              bottomTab: {
-                title: 'Tab 2',
-                //icon: require('../images/two.png'),
-                testID: 'SECOND_TAB_BAR_BUTTON'
-              }
-            }
-          }
-        }]
-      }
-    }
-  });*/
-
 });
