@@ -22,7 +22,7 @@ export default class PlaceInput extends Component {
     if(this.state.placeName.trim() === ""){
       return;
     } 
-    this.props.placeAddedHandler(this.state.placeName)
+    this.props.onPlaceAdded(this.state.placeName)
   }
 
   render (){

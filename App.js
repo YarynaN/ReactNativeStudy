@@ -1,13 +1,21 @@
 import { Navigation } from 'react-native-navigation';
+import { Provider} from 'react-redux';
 
 import AuthScreen from './src/screens/auth/Auth';
 import SharePlaceScreen from './src/screens/SharePlace/SharePlace';
 import FindPlaceScreen from './src/screens/FindPlace/FindPlace';
+import PlaceDetail from './src/screens/PlaceDetail/PlaceDetail';
+import configureStore from './src/store/configureStore';
+
+
+const store = configureStore();
 
 //register screens
-Navigation.registerComponent("awesome-places.AuthScreen", () => AuthScreen);
-Navigation.registerComponent("awesome-places.SharePlaceScreen", () => SharePlaceScreen);
-Navigation.registerComponent("awesome-places.FindPlaceScreen", () => FindPlaceScreen);
+Navigation.registerComponentWithRedux("awesome-places.AuthScreen", () => AuthScreen, Provider, store);
+Navigation.registerComponentWithRedux("awesome-places.SharePlaceScreen", () => SharePlaceScreen, Provider, store);
+Navigation.registerComponentWithRedux("awesome-places.FindPlaceScreen", () => FindPlaceScreen, Provider, store);
+Navigation.registerComponent("awesome-places.PlaceDetailScreen", () => PlaceDetailSrcreen);
+
 
 //start app
 Navigation.events().registerAppLaunchedListener(() => {
