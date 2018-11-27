@@ -7,34 +7,18 @@ import FindPlaceScreen from './src/screens/FindPlace/FindPlace';
 import PlaceDetailScreen from './src/screens/PlaceDetail/PlaceDetail';
 import configureStore from './src/store/configureStore';
 
-
 const store = configureStore();
 
 //register screens
-Navigation.registerComponentWithRedux("awesome-places.AuthScreen", () => AuthScreen, Provider, store);
-Navigation.registerComponentWithRedux("awesome-places.SharePlaceScreen", () => SharePlaceScreen, Provider, store);
-Navigation.registerComponentWithRedux("awesome-places.FindPlaceScreen", () => FindPlaceScreen, Provider, store);
-Navigation.registerComponent("awesome-places.PlaceDetailScreen", () => PlaceDetailScreen);
+Navigation.registerComponent("awesome-places.AuthScreen", () => AuthScreen, store, Provider);
+Navigation.registerComponent("awesome-places.SharePlaceScreen", () => SharePlaceScreen, store, Provider);
+Navigation.registerComponent("awesome-places.FindPlaceScreen", () => FindPlaceScreen, store, Provider);
+Navigation.registerComponent("awesome-places.PlaceDetailScreen", () => PlaceDetailScreen, store, Provider);
 
-
-//start app
-Navigation.events().registerAppLaunchedListener(() => {
-  Navigation.setRoot({
-    root: {
-      stack: {
-        children: [{
-          component: {
-            name: 'awesome-places.AuthScreen',
-            options: {
-              topBar: {
-                title: {
-                  text: 'Login',
-                }
-              }
-            }
-          }
-        }]
-      }
-    }
-  });
+// Start a App
+Navigation.startSingleScreenApp({
+  screen: {
+    screen: "awesome-places.AuthScreen",
+    title: "Login"
+  }
 });

@@ -5,32 +5,25 @@ import {connect} from "react-redux"
 import PlaceList from "../../components/PlaceList/PlaceList"
 
 class FindPlaceScreen extends Component {
-
-	itemSelectedHandler = key =>{
-		Navigation.push(this.props.componentId, {
-			  component: {
-			    name: 'example.PushedScreen',
-			    passProps: {
-			      text: 'Pushed screen'
-			    },
-			    options: {
-			      topBar: {
-			        title: {
-			          text: 'Pushed screen title'
-			        }
-			      }
-			    }
-			  }
+	itemSelectedHandler = key => {
+		const selPlace = this.props.places.find(place => {
+			return place.key === key;
 		});
+		this.props.navigator.push({
+			screen: "awesome-places.PlaceDetailScreen",
+			title: selPlace.name,
+			passProps: {
+				selectedPlace: selPlace
+			}
+		});
+	};
+	render(){
+		return(
+			<View>
+				<PlaceList places={this.props.places} onItemSelected/>
+			</View>
+		);
 	}
-
-		render(){
-			return(
-				<View>
-					<PlaceList places={this.props.places} onItemSelected/>
-				</View>
-			);
-		}
 }
 
 const mapStateToProps = state => {
