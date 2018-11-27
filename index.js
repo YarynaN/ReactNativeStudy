@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import App from './App';
 import configureStore from './src/store/configureStore';
 
-
 const store = configureStore();
 
 const RNRedux = () => (
@@ -12,6 +11,5 @@ const RNRedux = () => (
 		<App />
 	</Provider>
 );
-
 
 AppRegistry.registerComponent('myapp', () => RNRedux);

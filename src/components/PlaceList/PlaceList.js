@@ -17,6 +17,7 @@ const placeList = props => {
 			        onItemPressed={()=> props.onItemSelected(info.item.key)}
 	        	/>
     		)}
+            keyExtractor = { (item, index) => index.toString() }
     	/>
     );
 };
