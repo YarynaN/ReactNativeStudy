@@ -61,8 +61,8 @@ class AuthScreen extends Component{
 
 	loginHandler = () => {
 		const authData = {
-			email = this.state.controls.email.value;
-			password = this.state.controls.password.value
+			email: this.state.controls.email.value,
+			password: this.state.controls.password.value
 		};
 		this.props.onLogin(authData);
 		startTabs();
