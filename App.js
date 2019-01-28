@@ -1,5 +1,5 @@
 import { Navigation } from 'react-native-navigation';
-import { Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 
 import AuthScreen from './src/screens/auth/Auth';
 import SharePlaceScreen from './src/screens/SharePlace/SharePlace';
