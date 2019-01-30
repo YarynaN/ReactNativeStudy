@@ -8,6 +8,9 @@ import MainText from "../../components/UI/MainText";
 import PickImage from "../../components/PickImage/PickImage";
 import PickLocation from "../../components/PickLocation/PickLocation";
 import PlaceInput from "../../components/PlaceInput/PlaceInput";
+import validate from "../../utility/validation";
+import { trySharePlace } from "../../store/actions/index"
+
 
 class SharePlaceScreen extends Component {
 	static navigatorStyle = {
@@ -15,7 +18,15 @@ class SharePlaceScreen extends Component {
 	};
 
 	state = {
-		placeName: ""
+		controls:{
+			placeName:{
+				value: "",
+				valid: false,
+				validationRules: {
+					notEmpty: true
+				}
+			}
+		}
 	};
 
 	constructor(props){
@@ -34,16 +45,27 @@ class SharePlaceScreen extends Component {
 	}
 
 	placeNameChangedHandler = val => {
-		this.setState({
-			placeName: val
-		});
-	};
+    this.setState(prevState => {
+      return {
+        controls: {
+          ...prevState.controls,
+          placeName: {
+            ...prevState.controls.placeName,
+            value: val,
+            valid: validate(val, prevState.controls.placeName.validationRules)
+          }
+        }
+      };
+    });
+  };
 
 	placeAddedHandler = () => {
-		if (this.state.placeName.trim() !== ""){
-			this.props.onAddPlace(this.state.placeName);
+		if (this.state.controls.placeName.value.trim() !== ""){
+			this.props.onAddPlace(this.state.controls.placeName.value);
 		}
 	};
+
+
 
 	render(){
 		return(
@@ -54,10 +76,13 @@ class SharePlaceScreen extends Component {
 				</MainText>
 				<PickImage />
 				<PickLocation />
-				<PlaceInput placeName={this.state.placeName} onChangeText = {this.placeNameChangedHandler}/>
+				<PlaceInput placeData={this.state.controls.placeName} onChangeText = {this.placeNameChangedHandler}/>
 				<View style={styles.button}>
-					<Button title="Share The Place" onPress = {this.placeAddedHandler}/>
-				</View>
+		            <Button
+		              title="Share the Place!"
+		              onPress={this.placeAddedHandler}
+		              disabled={!this.state.controls.placeName.valid}/>
+          		</View>
 			</View>
 			</ScrollView>
 		);
