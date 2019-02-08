@@ -9,7 +9,6 @@ import PickImage from "../../components/PickImage/PickImage";
 import PickLocation from "../../components/PickLocation/PickLocation";
 import PlaceInput from "../../components/PlaceInput/PlaceInput";
 import validate from "../../utility/validation";
-import { trySharePlace } from "../../store/actions/index"
 
 
 class SharePlaceScreen extends Component {
@@ -22,6 +21,7 @@ class SharePlaceScreen extends Component {
 			placeName:{
 				value: "",
 				valid: false,
+				touched: false,
 				validationRules: {
 					notEmpty: true
 				}
@@ -52,7 +52,8 @@ class SharePlaceScreen extends Component {
           placeName: {
             ...prevState.controls.placeName,
             value: val,
-            valid: validate(val, prevState.controls.placeName.validationRules)
+            valid: validate(val, prevState.controls.placeName.validationRules),
+            touched: true
           }
         }
       };
