@@ -18,7 +18,8 @@ const reducer = (state = initialState, action) => {
           image: {
             uri:
               "https://www.telegraph.co.uk/content/dam/property/Spark/JLL/Berlin-centre.jpg?imwidth=450"
-          }
+          },
+          location: action.location
         })
       };
 
