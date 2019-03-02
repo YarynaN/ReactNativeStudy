@@ -1,4 +1,4 @@
-import { SET_PLACES } from './actionTypes';
+import { SET_PLACES, REMOVE_PLACE } from './actionTypes';
 import { uiStartLoading, uiStopLoading } from './index';
 
 
@@ -72,10 +72,25 @@ export const setPlaces = places => {
 };
 
 export const deletePlace = (key) => {
-	return {
-		type: DELETE_PLACE,
-		placeKey: key
+	return dispatch => {
+		dispatch(removePlace(key));
+		fetch("https://reactnative-cour-1549562975674.firebaseio.com/places/" + key + ".json", {
+			method: "DELETE"
+		})
+		.catch(err => err => {
+			console.log(err);
+			alert("Whoops! Something went wrong, try again!")
+		})
+		.then(res => res.json())
+		.then(parsedRes => {
+			console.log('DONE')
+		});
 	};
 };
 
-// 
+export const removePlace = (key) => {
+	return {
+		type: REMOVE_PLACE,
+		key: key
+	};
+};
