@@ -27,14 +27,14 @@ export const addPlace = (placeName, location, image) => {
 				body: JSON.stringify(placeData)
 			})
 		})
-		.catch(err => {
-			console.log(err);
-			alert("Whoops! Something went wrong, try again!");
-			dispatch(uiStopLoading());
-		})
 		.then(res => res.json())
 		.then(parsedRes => {
 			console.log(parsedRes);
+			dispatch(uiStopLoading());
+		})
+		.catch(err => {
+			console.log(err);
+			alert("Whoops! Something went wrong, try again!");
 			dispatch(uiStopLoading());
 		});
 	};
@@ -43,10 +43,6 @@ export const addPlace = (placeName, location, image) => {
 export const getPlaces = () => {
 	return dispatch => {
 		fetch("https://reactnative-cour-1549562975674.firebaseio.com/places.json")
-		.catch(err => {
-			console.log(err);
-			alert("Whoops! Something went wrong, try again!")
-		})
 		.then(res => res.json())
 		.then(parsedRes => {
 			const places = [];
@@ -60,6 +56,10 @@ export const getPlaces = () => {
 				})
 			}
 			dispatch (setPlaces(places))
+		})
+		.catch(err => {
+			console.log(err);
+			alert("Whoops! Something went wrong, try again!")
 		});
 	};
 };
@@ -77,13 +77,13 @@ export const deletePlace = (key) => {
 		fetch("https://reactnative-cour-1549562975674.firebaseio.com/places/" + key + ".json", {
 			method: "DELETE"
 		})
-		.catch(err => err => {
-			console.log(err);
-			alert("Whoops! Something went wrong, try again!")
-		})
 		.then(res => res.json())
 		.then(parsedRes => {
 			console.log('DONE')
+		})
+		.catch(err => err => {
+			console.log(err);
+			alert("Whoops! Something went wrong, try again!")
 		});
 	};
 };
