@@ -33,7 +33,7 @@ export const tryAuth = (authData, authMode) => {
 			if(!parsedRes.idToken){
 				alert('Authentication failed. Please, try again!');
 			} else {
-				dispatch(authStoreToken(parsedRes.idToken));
+				dispatch(authStoreToken(parsedRes.idToken, parsedRes.expiresIn));
 				startMainTabs();
 			}
 			console.log(parsedRes);
@@ -41,10 +41,13 @@ export const tryAuth = (authData, authMode) => {
 	};
 };
 
-export const authStoreToken = (token) => {
+export const authStoreToken = (token, expiresIn) => {
 	return dispatch => {
 		dispatch(authSetToken(token));
+		const now = new Date();
+		const expiryDate = now.getTime() + expiresIn * 1000;
 		AsyncStorage.setItem("rns:auth:token", token);
+		AsyncStorage.setItem("rns:auth:expiryDate", expiryDate.toString());
 	};
 };
 
@@ -60,19 +63,34 @@ export const authGetToken = () => {
 		const promise = new Promise((resolve, reject) => {
 			const token = getState().auth.token;
 			if(!token){
+				let fetchedToken;
 				AsyncStorage.getItem("rns:auth:token")
 				.catch(err => reject())
 				.then(tokenFromStorage => {
+					fetchedToken = tokenFromStorage;
 					if(!tokenFromStorage){
 						reject();
 						return;
 					}
-					dispatch(authSetToken(tokenFromStorage));
-					resolve(tokenFromStorage);
-				});
-			} else {
+					return AsyncStorage.getItem("rns:auth:expiryDate");
+				})
+				.then(expiryDate => {
+					const parsedExpiryDate = new Date(parseInt(expiryDate));
+					const now = new Date;
+					if (parsedExpiryDate > now) {
+						dispatch(authSetToken(fetchedToken));
+						resolve(fetchedToken);
+					} else {
+						reject();
+					}
+				})
+				.catch(err => reject());
+				} else {
 				resolve(token);
 			}
+		});
+		promise.catch(err => {
+			dispatch(authClearStorage());
 		});
 		return promise;
 	};
@@ -86,4 +104,11 @@ export const authAutoSignIn = () => {
 		})
 		.catch(err => console.log("Failed to catch token!"));
 	};
+};
+
+export const authClearStorage = () => {
+	return dispatch => {
+		AsyncStorage.removeItem("rns:auth:token");
+		AsyncStorage.removeItem("rns:auth:expiryDate");
+	}
 };
