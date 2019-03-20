@@ -1,8 +1,9 @@
 import { AsyncStorage } from 'react-native';
 
-import { TRY_AUTH, AUTH_SET_TOKEN } from './actionTypes';
+import { TRY_AUTH, AUTH_SET_TOKEN, AUTH_REMOVE_TOKEN } from './actionTypes';
 import { uiStartLoading, uiStopLoading } from './index';
-import startMainTabs from '../../screens/MainTabs/startMainTabs'
+import startMainTabs from '../../screens/MainTabs/startMainTabs';
+import App from '../../../App';
 
 export const tryAuth = (authData, authMode) => {
 	return dispatch => {
@@ -43,19 +44,20 @@ export const tryAuth = (authData, authMode) => {
 
 export const authStoreToken = (token, expiresIn, refreshToken) => {
 	return dispatch => {
-		dispatch(authSetToken(token));
 		const now = new Date();
 		const expiryDate = now.getTime() + expiresIn * 1000;
+		dispatch(authSetToken(token, expiryDate));
 		AsyncStorage.setItem("rns:auth:token", token);
 		AsyncStorage.setItem("rns:auth:expiryDate", expiryDate.toString());
 		AsyncStorage.setItem("rns:auth:refreshToken", refreshToken);
 	};
 };
 
-export const authSetToken = (token) => {
+export const authSetToken = (token, expiryDate) => {
 	return {
 		type: AUTH_SET_TOKEN,
-		token: token
+		token: token,
+		expiryDate: expiryDate
 	};
 };
 
@@ -63,7 +65,8 @@ export const authGetToken = () => {
 	return (dispatch, getState) => {
 		const promise = new Promise((resolve, reject) => {
 			const token = getState().auth.token;
-			if(!token){
+			const expiryDate = getState().auth.expiryDate;
+			if(!token || new Date(expiryDate) <= new Date()){
 				let fetchedToken;
 				AsyncStorage.getItem("rns:auth:token")
 				.catch(err => reject())
@@ -137,5 +140,22 @@ export const authClearStorage = () => {
 	return dispatch => {
 		AsyncStorage.removeItem("rns:auth:token");
 		AsyncStorage.removeItem("rns:auth:expiryDate");
+		return AsyncStorage.removeItem("rns:auth:refreshToken");
 	}
+};
+
+export const authLogOut = () => {
+	return dispatch => {
+		dispatch(authClearStorage())
+		.then(() => {
+			App();
+		});
+		dispatch(authRemoveToken());
+	};
+};
+
+export const authRemoveToken = () => {
+	return {
+		type: AUTH_REMOVE_TOKEN
+	};
 };
