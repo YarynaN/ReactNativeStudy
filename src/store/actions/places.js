@@ -1,16 +1,28 @@
 import { SET_PLACES, REMOVE_PLACE } from './actionTypes';
-import { uiStartLoading, uiStopLoading } from './index';
+import { uiStartLoading, uiStopLoading, authGetToken } from './index';
 
 
 export const addPlace = (placeName, location, image) => {
 	return dispatch => {
+		let authToken;
 		dispatch(uiStartLoading());
-		fetch("https://us-central1-reactnative-cour-1549562975674.cloudfunctions.net/storeImage", {
-			method: "POST",
-			body: JSON.stringify({
-				image: image.base64
+		dispatch(authGetToken())
+			.catch(() => {
+				alert("No valid token found");
 			})
-		})
+			.then(token => {
+				authToken = token;
+				return fetch("https://us-central1-reactnative-cour-1549562975674.cloudfunctions.net/storeImage", {
+					method: "POST",
+					body: JSON.stringify({
+						image: image.base64
+					}),
+					headers: {
+						"Authorization": "Bearer " + authToken
+					}
+				});
+			})
+		
 		.catch(err => {
 			console.log(err);
 			dispatch(uiStopLoading());
@@ -22,19 +34,19 @@ export const addPlace = (placeName, location, image) => {
 				location: location,
 				image: parsedRes.imageUrl
 			};
-			return fetch("https://reactnative-cour-1549562975674.firebaseio.com/places.json", {
+			return fetch("https://reactnative-cour-1549562975674.firebaseio.com/places.json?auth=" + authToken, {
 				method: "POST",
 				body: JSON.stringify(placeData)
 			})
 		})
-		.catch(err => {
-			console.log(err);
-			alert("Whoops! Something went wrong, try again!");
-			dispatch(uiStopLoading());
-		})
 		.then(res => res.json())
 		.then(parsedRes => {
 			console.log(parsedRes);
+			dispatch(uiStopLoading());
+		})
+		.catch(err => {
+			console.log(err);
+			alert("Whoops! Something went wrong, try again!");
 			dispatch(uiStopLoading());
 		});
 	};
@@ -42,10 +54,12 @@ export const addPlace = (placeName, location, image) => {
 
 export const getPlaces = () => {
 	return dispatch => {
-		fetch("https://reactnative-cour-1549562975674.firebaseio.com/places.json")
-		.catch(err => {
-			console.log(err);
-			alert("Whoops! Something went wrong, try again!")
+	dispatch(authGetToken())
+		.then(token => {
+			return fetch("https://reactnative-cour-1549562975674.firebaseio.com/places.json?auth=" + token)
+		})
+		.catch(() => {
+			alert("No valid token found");
 		})
 		.then(res => res.json())
 		.then(parsedRes => {
@@ -60,6 +74,10 @@ export const getPlaces = () => {
 				})
 			}
 			dispatch (setPlaces(places))
+		})
+		.catch(err => {
+			console.log(err);
+			alert("Whoops! Something went wrong, try again!")
 		});
 	};
 };
@@ -73,18 +91,24 @@ export const setPlaces = places => {
 
 export const deletePlace = (key) => {
 	return dispatch => {
-		dispatch(removePlace(key));
-		fetch("https://reactnative-cour-1549562975674.firebaseio.com/places/" + key + ".json", {
-			method: "DELETE"
-		})
-		.catch(err => err => {
-			console.log(err);
-			alert("Whoops! Something went wrong, try again!")
-		})
-		.then(res => res.json())
-		.then(parsedRes => {
-			console.log('DONE')
-		});
+		dispatch(authGetToken())
+			.catch(() => {
+				alert("No valid token found");
+			})
+			.then(token => {
+				dispatch(removePlace(key));
+				return fetch("https://reactnative-cour-1549562975674.firebaseio.com/places/" + key + ".json?auth=" + token, {
+					method: "DELETE"
+				});
+			})
+			.then(res => res.json())
+			.then(parsedRes => {
+				console.log('DONE')
+			})
+			.catch(err => err => {
+				console.log(err);
+				alert("Whoops! Something went wrong, try again!")
+			});
 	};
 };
 
