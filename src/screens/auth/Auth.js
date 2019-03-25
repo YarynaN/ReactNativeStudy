@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+	import React, {Component} from 'react';
 import{ View, Text, Button, TextInput, StyleSheet, ImageBackground, Dimensions, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -6,7 +6,7 @@ import DefaultInput from "../../components/UI/DefaultInput";
 import HeadingText from "../../components/UI/HeadingText";
 import MainText from "../../components/UI/MainText";
 import ButtonWithBackground from "../../components/UI/ButtonWithBackground";
-import backgroundImage from "../../assets/background.jpg";
+import franyk from "../../assets/franyk.jpg";
 import validate from "../../utility/validation";
 import { tryAuth, authAutoSignIn } from "../../store/actions/index"
 
@@ -149,7 +149,7 @@ class AuthScreen extends Component{
 			submitButton = <ActivityIndicator />;
 		}
 		return(
-			<ImageBackground source={backgroundImage} style={styles.backgroundImage}>
+			<ImageBackground source={franyk} style={styles.backgroundImage}>
 				<KeyboardAvoidingView style={styles.container} behavior="padding">
 					{headingText}
 					<ButtonWithBackground 

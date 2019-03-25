@@ -7,7 +7,7 @@ import { getPlaces } from "../../store/actions/index"
 
 class FindPlaceScreen extends Component {
 	static navigatorStyle = {
-		navBarButtonColor: "orange"
+		navBarButtonColor: "green"
 	};
 
 	state = {
@@ -114,13 +114,13 @@ const styles = StyleSheet.create({
 		justifyContent: "center"
 	},
 	searchButton:{
-		borderColor: "orange",
+		borderColor: "#22C14D",
 		borderWidth: 3,
 		borderRadius: 50,
 		padding: 20
 	},
 	searchButtonText:{
-		color: "orange",
+		color: "#22C14D",
 		fontWeight: "bold",
 		fontSize: 26
 	}

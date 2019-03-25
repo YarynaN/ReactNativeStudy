@@ -839,7 +839,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 3FXXM2UXS6;
+						DevelopmentTeam = 5ULYB7N4N5;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1440,7 +1440,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 3FXXM2UXS6;
+				DEVELOPMENT_TEAM = 5ULYB7N4N5;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
@@ -1452,7 +1452,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = MyApp.reactjs.project2;
+				PRODUCT_BUNDLE_IDENTIFIER = Franyk.reactjs.project;
 				PRODUCT_NAME = myapp;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1463,7 +1463,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3FXXM2UXS6;
+				DEVELOPMENT_TEAM = 5ULYB7N4N5;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
@@ -1475,7 +1475,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = MyApp.reactjs.project2;
+				PRODUCT_BUNDLE_IDENTIFIER = Franyk.reactjs.project;
 				PRODUCT_NAME = myapp;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

@@ -20,7 +20,7 @@ const startTabs = () => {
                             {
                                 icon: sources[2],
                                 title: "Menu",
-                                id: "sideDrawerToggle"
+                                id: "sideDrawerToggle",
                             }
                         ]
                     }
@@ -35,14 +35,14 @@ const startTabs = () => {
                             {
                                 icon: sources[2],
                                 title: "Menu",
-                                id: "sideDrawerToggle"
+                                id: "sideDrawerToggle",
                             }
                         ]
                     }
                 }
             ],
             tabsStyle:{
-                tabBarSelectedButtonColor: "orange"
+                tabBarSelectedButtonColor: "#22C14D"
             },
             drawer: {
                 left: {
@@ -50,7 +50,7 @@ const startTabs = () => {
                 }
             },
             appStyle:{
-                tabBarSelectedButtonColor: "orange"
+                tabBarSelectedButtonColor: "#22C14D"
             },
         });
     });

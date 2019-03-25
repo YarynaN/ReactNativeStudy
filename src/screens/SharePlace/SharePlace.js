@@ -13,7 +13,7 @@ import validate from "../../utility/validation";
 
 class SharePlaceScreen extends Component {
 	static navigatorStyle = {
-		navBarButtonColor: "orange"
+		navBarButtonColor: "green"
 	};
 
 	constructor(props){
