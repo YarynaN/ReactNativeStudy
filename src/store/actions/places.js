@@ -33,19 +33,32 @@ export const addPlace = (placeName, location, image) => {
 			console.log(err);
 			dispatch(uiStopLoading());
 		})
-		.then(res => res.json())
+		.then(res => {
+			if(res.ok){
+				return res.json();
+			} else {
+				throw(new Error());
+			}
+		})
 		.then(parsedRes => {
 			const placeData = {
 				name: placeName,
 				location: location,
-				image: parsedRes.imageUrl
+				image: parsedRes.imageUrl,
+				imagePath: parsedRes.imagePath
 			};
 			return fetch("https://reactnative-cour-1549562975674.firebaseio.com/places.json?auth=" + authToken, {
 				method: "POST",
 				body: JSON.stringify(placeData)
 			})
 		})
-		.then(res => res.json())
+		.then(res => {
+			if(res.ok){
+				return res.json();
+			} else {
+				throw(new Error());
+			}
+		})
 		.then(parsedRes => {
 			console.log(parsedRes);
 			dispatch(uiStopLoading());
@@ -74,7 +87,13 @@ export const getPlaces = () => {
 		.catch(() => {
 			alert("No valid token found");
 		})
-		.then(res => res.json())
+		.then(res => {
+			if(res.ok){
+				return res.json();
+			} else {
+				throw(new Error());
+			}
+		})
 		.then(parsedRes => {
 			const places = [];
 			for(let key in parsedRes){
@@ -114,7 +133,13 @@ export const deletePlace = (key) => {
 					method: "DELETE"
 				});
 			})
-			.then(res => res.json())
+			.then(res => {
+				if(res.ok){
+					return res.json();
+				} else {
+					throw(new Error());
+				}
+			})
 			.then(parsedRes => {
 				console.log('DONE')
 			})
