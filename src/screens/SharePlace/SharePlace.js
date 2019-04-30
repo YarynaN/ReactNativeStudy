@@ -37,7 +37,10 @@ class SharePlaceScreen extends Component {
 				},
 				location:{
 					value: null,
-					valid: false
+					valid: false,
+					validationRules: {
+						inCity: true
+					}
 				},
 				image:{
 					value: null,
@@ -90,8 +93,9 @@ class SharePlaceScreen extends Component {
   				controls: {
   					...prevState.controls,
 	  				location: {
+	  					...prevState.controls.location,
 	  					value: location,
-	  					valid: true
+	  					valid: validate(location, prevState.controls.location.validationRules)
 	  				}
   				}
   			};
