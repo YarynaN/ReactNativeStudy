@@ -101,7 +101,7 @@ android {
         applicationId "com.myapp"
         minSdkVersion 19
         targetSdkVersion 26
-        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative57"
+        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative57_5"
         versionCode 1
         versionName "1.0"
         ndk {
